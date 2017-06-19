@@ -4,9 +4,10 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.validation.Valid;
 
+import org.apache.log4j.spi.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import com.sharath.spring.mvc.validators.EmployeeValidator;
 
 @Controller
 public class EmployeeController {
+	private static final Logger logger=org.slf4j.LoggerFactory.getLogger(EmployeeController.class);
 	@Autowired
 	private Employee emp;
 	@Autowired
@@ -40,7 +42,7 @@ public class EmployeeController {
 	} 
 	@RequestMapping(value = "/", method=RequestMethod.GET)
 	public String getEmployee(Model model) {
-		System.out.println("getEmployee called");
+	logger.debug("getEmployee called");
 		model.addAttribute("employee",new Employee());
 		return "employee";
 	}
