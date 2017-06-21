@@ -41,25 +41,6 @@ public Employee getEmployeeDetails(@PathVariable(value="employeeId") Integer emp
 Employee emp=	employeeService.getEmployeeInfo(empId);
 	return emp;
 }
-@RequestMapping(value="/employee",params="Add",method=RequestMethod.POST)
-public String addEmployee(@Valid @ModelAttribute("employee") Employee employee,BindingResult bindingResult,Model model) throws SQLException{
-	if (bindingResult.hasErrors()) {
-        return "employee";
-    }
-	employeeService.addEmpInfo(employee.getEmpNo(), employee.getFirstName(), employee.getLastName(), employee.getGender(), employee.getBirthDate(), employee.getHireDate(), employee.getSalary());
-	model.addAttribute("employee",employeeService.getEmployeeInfo(employee.getEmpNo()));
-	return"employeedetails";
-}
-@RequestMapping(value="/employee",params="Update",method=RequestMethod.POST)
-public String updateEmployee(@Valid @ModelAttribute("employee") Employee employee,BindingResult bindingResult,Model model) throws SQLException{
-	if (bindingResult.hasErrors()) {
-        return "employee";
-    }
-	System.out.println("Update is calling");
 
-	employeeService.updateEmpInfo(employee.getEmpNo(), employee.getFirstName(), employee.getLastName(), employee.getGender(), employee.getBirthDate(), employee.getHireDate());
-	model.addAttribute("employee",employeeService.getEmployeeInfo(employee.getEmpNo()));
-	return"employeedetails";
-}	
 }
 
