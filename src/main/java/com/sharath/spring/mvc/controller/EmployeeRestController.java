@@ -29,14 +29,14 @@ import com.sharath.spring.mvc.validators.EmployeeValidator;
 @RequestMapping("/employee")
 public class EmployeeRestController {
 	private static final Logger logger=org.slf4j.LoggerFactory.getLogger(EmployeeController.class);
-	@Autowired
-	private Employee emp;
+	/*@Autowired
+	private Employee emp;*/
 	@Autowired
 	private EmployeeValidator employeeValidator;
 	@Autowired
 	EmployeeService employeeService;
 			
-@RequestMapping(value="/{employeeId}", method=RequestMethod.GET,produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.TEXT_HTML_VALUE})
+@RequestMapping(value="/{employeeId}", method=RequestMethod.GET)
 public Employee getEmployeeDetails(@PathVariable(value="employeeId") Integer empId, Model model) throws SQLException{
 Employee emp=	employeeService.getEmployeeInfo(empId);
 	return emp;

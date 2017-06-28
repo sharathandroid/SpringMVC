@@ -1,82 +1,180 @@
 package com.sharath.spring.mvc.Model;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-@Component
-public class Employee {
-	private int empNo;
-	private Date birthDate;
-	private String firstName;
-	private String lastName;
-	private String gender;
-	private Date hireDate;
-	private int Salary;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-	
-	
-	public Employee(int empNo, Date birthDate, String firstName, String lastName, String gender, Date hireDate,int Salary) {
-		super();
-		this.empNo = empNo;
-		this.birthDate = birthDate;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.gender = gender;
-		this.hireDate = hireDate;
-		this.Salary=Salary;
-	}
+@Entity
+public class Employee implements Serializable {
 	public Employee() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
-	public int getEmpNo() {
-		return empNo;
+
+	@Id
+	private Integer employeeId;
+	public Employee(Integer employeeId, Integer deptId, String firstName, String lastName, String gender) {
+		super();
+		this.employeeId = employeeId;
+		this.deptId = deptId;
+		FirstName = firstName;
+		LastName = lastName;
+		this.gender = gender;
 	}
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
+
+	private Integer deptId;
+	private String FirstName;
+	private String LastName;
+	private String gender;
+    
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.ALL)
+	private Salary salary;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "employee",cascade = CascadeType.ALL)
+	private List<Address> addressList =  new ArrayList<Address>();
+
+	public Integer getEmployeeId() {
+		return employeeId;
 	}
-	public Date getBirthDate() {
-		return birthDate;
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
 	}
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+
+	public Integer getDeptId() {
+		return deptId;
 	}
+
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
+	}
+
 	public String getFirstName() {
-		return firstName;
+		return FirstName;
 	}
+
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		FirstName = firstName;
 	}
+
 	public String getLastName() {
-		return lastName;
+		return LastName;
 	}
+
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		LastName = lastName;
 	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public Date getHireDate() {
-		return hireDate;
+	public Salary getSalary() {
+		return salary;
 	}
-	public void setHireDate(Date hireDate) {
-		this.hireDate = hireDate;
+	public void setSalary(Salary salary) {
+		this.salary = salary;
 	}
-	public int getSalary() {
-		return Salary;
+
+	public List<Address> getAddressList() {
+		return addressList;
 	}
-	
-	
-	public void setSalary(int int1) {
-		// TODO Auto-generated method stub
-		this.Salary=int1;
+
+	public void setAddressList(List<Address> addressList) {
+		this.addressList = addressList;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((FirstName == null) ? 0 : FirstName.hashCode());
+		result = prime * result + ((LastName == null) ? 0 : LastName.hashCode());
+	//	result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((deptId == null) ? 0 : deptId.hashCode());
+		result = prime * result + ((employeeId == null) ? 0 : employeeId.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+	//	result = prime * result + ((salary == null) ? 0 : salary.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		if (FirstName == null) {
+			if (other.FirstName != null)
+				return false;
+		} else if (!FirstName.equals(other.FirstName))
+			return false;
+		if (LastName == null) {
+			if (other.LastName != null)
+				return false;
+		} else if (!LastName.equals(other.LastName))
+			return false;
+//		if (address == null) {
+//			if (other.address != null)
+//				return false;
+//		} else if (!address.equals(other.address))
+//			return false;
+		if (deptId == null) {
+			if (other.deptId != null)
+				return false;
+		} else if (!deptId.equals(other.deptId))
+			return false;
+		if (employeeId == null) {
+			if (other.employeeId != null)
+				return false;
+		} else if (!employeeId.equals(other.employeeId))
+			return false;
+		if (gender == null) {
+			if (other.gender != null)
+				return false;
+		} else if (!gender.equals(other.gender))
+			return false;
+//		if (salary == null) {
+//			if (other.salary != null)
+//				return false;
+//		} else if (!salary.equals(other.salary))
+//			return false;
+		return true;
+	}
+
+	public Employee(Integer employeeId, Integer deptId, String firstName, String lastName, String gender, Salary salary,
+			List<Address> addressList) {
+		super();
+		this.employeeId = employeeId;
+		this.deptId = deptId;
+		FirstName = firstName;
+		LastName = lastName;
+		this.gender = gender;
+		this.salary = salary;
+		this.addressList = addressList;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", deptId=" + deptId + ", FirstName=" + FirstName + ", LastName="
+				+ LastName + ", gender=" + gender + ", salary=" + salary + ", address=" + addressList + "]";
+	}
+
 }

@@ -22,21 +22,19 @@
 				<th>Firstname</th>
 				<th>Lastname</th>
 				<th>Gender</th>
-				<th>BirthDate</th>
-				<th>HireDate</th>
 				<th>Salary</th>
+				<th>State</th>
 				
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td>${employee.empNo}</td>
+				<td>${employee.employeeId}</td>
 				<td>${employee.firstName}</td>
 				<td>${employee.lastName}</td>
 				<td>${employee.gender}</td>
-				<td>${employee.birthDate}</td>
-				<td>${employee.hireDate}</td>
-				<td>${employee.salary}</td>
+				<td>${employee.salary.salary}</td>
+				<td>${employee.addressList[0].state}</td>
 				
 				
 				

@@ -39,18 +39,15 @@ public class EmployeeOperationsImpl implements EmployeeOperations {
         Employee employee = new Employee();
 
         while (resultSet.next()) {
-            employee.setEmpNo(resultSet.getInt(1));
-            employee.setBirthDate(resultSet.getDate(2));
+            employee.setEmployeeId(resultSet.getInt(1));
             employee.setFirstName(resultSet.getString(3));
             employee.setLastName(resultSet.getString(4));
             employee.setGender(resultSet.getString(5));
-            employee.setHireDate(resultSet.getDate(6));
+            employee.getSalary().setSalary(resultSet.getInt(6));
             
           //  employeeList.add(employee);
         }
-        while (resultSet2.next()){
-        	employee.setSalary(resultSet2.getInt(2));
-        }
+       
         return employee;
 	}
 	public void addEmployee(int employeeId, String firstName, String lastName, String gender, Date birthDate,
